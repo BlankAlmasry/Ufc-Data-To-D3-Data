@@ -1,5 +1,8 @@
 import csv
+import operator
 import typing
+
+import pandas
 from elote.competitors.base import BaseCompetitor
 
 
@@ -9,20 +12,22 @@ def assign_players_to_dict(player1, player2, players, cls):
             players[player] = cls()
 
 
-def write_to_csv(player1, player2, p1, p2, meta, rating):
-    rating.writerow([*meta, player1, p1.rating, ])
-    rating.writerow([*meta, player2, p2.rating])
+def write_to_csv(player1, player2, p1, p2, rating, *meta):
+    rating.writerow([meta[0][:4] + "-01-01", player1, p1.rating])
+    rating.writerow([meta[0][:4] + "-01-01", player2, p2.rating])
 
 
-def compile_matches(matches: list[tuple], cls: typing.Type[BaseCompetitor]):
+def compile_matches(cls: typing.Type[BaseCompetitor]):
     players = {}
     with open('fights.csv', 'r', encoding='UTF8', newline='') as fights:
         with open('ratings.csv', 'w', encoding='UTF8', newline='') as ratings:
             fights = csv.reader(fights)
+            # sort by date
+            sorted_fights = sorted(fights, key=operator.itemgetter(4), reverse=False)
             rating = csv.writer(ratings)
             # header
             rating.writerow(["date", "name", "value"])
-            for match in fights:
+            for match in sorted_fights:
                 player1, player2, result1, result2, *meta = match
                 assign_players_to_dict(player1, player2, players, cls)
                 p1 = players[player1]
@@ -35,4 +40,4 @@ def compile_matches(matches: list[tuple], cls: typing.Type[BaseCompetitor]):
                     p1.tied(p2)
                 else:
                     continue
-                write_to_csv(player1, player2, p1, p2, meta, rating)
+                write_to_csv(player1, player2, p1, p2, rating, *meta)
