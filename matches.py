@@ -7,20 +7,20 @@ from elote.competitors.base import BaseCompetitor
 from algorithms.glicko2.glicko2 import Rating, Glicko2
 
 
-def assign_players_to_dict(player1, player2, players, cls):
-    for player in [player1, player2]:
-        if not player in players:
-            players[player] = Rating()
-
-
-def write_to_csv(player, p, rating):
-    rating.writerow([player, p.mu])
-
-
 def top_15_fighters():
     return ["Khabib-Nurmagomedov", "Kamaru-Usman", "Demetrious-Johnson", "Amanda-Nunes", "Jon-Jones", "Henry-Cejudo",
             "Jose-Aldo", "Daniel-Cormier", "Stipe-Miocic", "Conor-McGregor", "Georges-St-Pierre", "Anderson-Silva",
             "Israel-Adesanya", "Alexander-Volkanovski", "Francis-Ngannou"]
+
+
+def assign_players_to_dict(player1, player2, players, cls):
+    for player in [player1, player2]:
+        if player not in players:
+            players[player] = cls()
+
+
+def write_to_csv(player, rating, file):
+    file.writerow([player, rating])
 
 
 def generate_d3_format(ratings_file, fighters):
@@ -33,7 +33,7 @@ def generate_d3_format(ratings_file, fighters):
         d[row[0]].append(row[1])
     for f in d.keys():
         if len(d[f]) < 24:
-            d[f].extend([d[f][len(d[f])-1]] * (25 - len(d[f])))
+            d[f].extend([d[f][len(d[f]) - 1]] * (25 - len(d[f])))
     j = open('data.js', 'w')
     j.write("const dataOri = [")
     # headers
@@ -64,7 +64,7 @@ def compile_matches(cls: typing.Type[BaseCompetitor]):
             g = Glicko2()
             for match in sorted_fights:
                 player1, player2, result1, result2, *meta = match
-                assign_players_to_dict(player1, player2, players, cls)
+                assign_players_to_dict(player1, player2, players, Rating)
                 p1 = players[player1]
                 p2 = players[player2]
                 if result1 == "Win" or result2 == "Lose":
