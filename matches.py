@@ -31,10 +31,13 @@ def generate_d3_format(ratings_file, fighters):
         d[fighter] = []
     for row in r:
         d[row[0]].append(row[1])
+    for f in d.keys():
+        if len(d[f]) < 24:
+            d[f].extend([d[f][len(d[f])-1]] * (25 - len(d[f])))
     j = open('data.json', 'w')
     j.write("{ \"dataOri\" :[")
     # headers
-    json.dump(["fights", *[n for n in range(30)]], j)
+    json.dump(["fights", *[n for n in range(1, 25)]], j)
     j.write(',\n')
     for k, v in d.items():
         json.dump([k, *v], j)
