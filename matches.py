@@ -1,4 +1,5 @@
 import csv
+import json
 import operator
 import typing
 from elote.competitors.base import BaseCompetitor
@@ -19,7 +20,30 @@ def write_to_csv(player, p, rating):
 def top_15_fighters():
     return ["Khabib-Nurmagomedov", "Kamaru-Usman", "Demetrious-Johnson", "Amanda-Nunes", "Jon-Jones", "Henry-Cejudo",
             "Jose-Aldo", "Daniel-Cormier", "Stipe-Miocic", "Conor-McGregor", "Georges-St-Pierre", "Anderson-Silva",
-            "Israel-Adesanya", "Max-Holloway", "Alexander-Volkanovski", "Francis-Ngannou"]
+            "Israel-Adesanya", "Alexander-Volkanovski", "Francis-Ngannou"]
+
+
+def generate_d3_format(ratings_file, fighters):
+    r = csv.reader(ratings_file)
+    next(r)  # skip header
+    d = {}
+    for fighter in fighters:
+        d[fighter] = []
+    for row in r:
+        d[row[0]].append(row[1])
+    j = open('data.json', 'w')
+    j.write("{ \"dataOri\" :[")
+    # headers
+    json.dump(["fights", *[n for n in range(30)]], j)
+    j.write(',\n')
+    for k, v in d.items():
+        json.dump([k, *v], j)
+        if list(d.keys())[-1] != k:
+            j.write(',\n')
+        else:
+            j.write('\n')
+
+    j.write("]}")
 
 
 def compile_matches(cls: typing.Type[BaseCompetitor]):
@@ -58,5 +82,5 @@ def compile_matches(cls: typing.Type[BaseCompetitor]):
                     write_to_csv(player1, p1, rating)
                 if player2 in fighters:
                     write_to_csv(player2, p2, rating)
-
-
+    rating_file = open('ratings.csv', 'r', encoding='UTF8', newline='')
+    generate_d3_format(rating_file, fighters)
