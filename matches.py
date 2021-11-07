@@ -1,10 +1,9 @@
 import csv
 import operator
 import typing
-import pandas
 from elote.competitors.base import BaseCompetitor
 
-from algorithms.glicko2 import Rating, Glicko2
+from algorithms.glicko2.glicko2 import Rating, Glicko2
 
 
 def top_15_fighters():

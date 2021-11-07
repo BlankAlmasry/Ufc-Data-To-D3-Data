@@ -1,4 +1,3 @@
 ./__pycache__
 ./.idea
-ratings.csv
-fights.csv
+*.csv
