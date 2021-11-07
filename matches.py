@@ -28,16 +28,16 @@ def generate_d3_format(ratings_file, fighters):
     next(r)  # skip header
     d = {}
     for fighter in fighters:
-        d[fighter] = []
+        d[fighter] = ["1500"]
     for row in r:
         d[row[0]].append(row[1])
     for f in d.keys():
         if len(d[f]) < 24:
             d[f].extend([d[f][len(d[f])-1]] * (25 - len(d[f])))
-    j = open('data.json', 'w')
-    j.write("{ \"dataOri\" :[")
+    j = open('data.js', 'w')
+    j.write("const dataOri = [")
     # headers
-    json.dump(["fights", *[n for n in range(1, 25)]], j)
+    json.dump(["fights", *[n for n in range(0, 25)]], j)
     j.write(',\n')
     for k, v in d.items():
         json.dump([k, *v], j)
@@ -46,7 +46,7 @@ def generate_d3_format(ratings_file, fighters):
         else:
             j.write('\n')
 
-    j.write("]}")
+    j.write("]")
 
 
 def compile_matches(cls: typing.Type[BaseCompetitor]):
