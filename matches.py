@@ -49,41 +49,53 @@ def generate_d3_format(ratings_file, fighters):
     j.write("]")
 
 
-def compile_matches(cls: typing.Type[BaseCompetitor]):
+def compile_matches(csv_file):
     players = {}
     fighters = top_15_fighters()
 
-    with open('fights.csv', 'r', encoding='UTF8', newline='') as fights:
-        with open('ratings.csv', 'w', encoding='UTF8', newline='') as ratings:
-            fights = csv.reader(fights)
-            # sort by date
-            sorted_fights = sorted(fights, key=operator.itemgetter(4), reverse=False)
-            rating = csv.writer(ratings)
-            # header
-            rating.writerow(["fighter", "value"])
-            g = Glicko2()
-            for match in sorted_fights:
-                player1, player2, result1, result2, *meta = match
-                assign_players_to_dict(player1, player2, players, Rating)
-                p1 = players[player1]
-                p2 = players[player2]
-                if result1 == "Win" or result2 == "Lose":
-                    p1, p2 = g.rate_1vs1(p1, p2)
-                    players[player1] = p1
-                    players[player2] = p2
-                elif result1 == "Lose" or result2 == "Win":
-                    p2, p1 = g.rate_1vs1(p2, p1)
-                    players[player1] = p1
-                    players[player2] = p2
-                elif result1 == "Draw" or result2 == "Draw":
-                    p1, p2 = g.rate_1vs1(p1, p2, drawn=True)
-                    players[player1] = p1
-                    players[player2] = p2
-                else:
-                    continue
-                if player1 in fighters:
-                    write_to_csv(player1, p1, rating)
-                if player2 in fighters:
-                    write_to_csv(player2, p2, rating)
+    with open(csv_file, 'r', encoding='UTF8', newline='') as fights:
+        fights = csv.reader(fights)
+        # sort by date
+        sorted_fights = sorted(fights, key=operator.itemgetter(4), reverse=False)
+        glicko_2_facade(fighters, players, sorted_fights)
+
+
+def glicko_2_facade(fighters, players, sorted_fights):
+    with open('ratings.csv', 'w', encoding='UTF8', newline='') as ratings:
+        rating = csv.writer(ratings)
+        rating.writerow(["fighter", "value"])
+        glicko_2(fighters, players, rating, sorted_fights)
     rating_file = open('ratings.csv', 'r', encoding='UTF8', newline='')
     generate_d3_format(rating_file, fighters)
+        # glicko_1(fighters, players, rating, sorted_fights)
+        # ECF(fighters, players, rating, sorted_fights)
+        # ELO(fighters, players, rating, sorted_fights)
+        # DWZ(fighters, players, rating, sorted_fights)
+        # TrueSkill(fighters, players, rating, sorted_fights)
+
+
+def glicko_2(fighters, players, rating, sorted_fights):
+    g = Glicko2()
+    for match in sorted_fights:
+        player1, player2, result1, result2, *meta = match
+        assign_players_to_dict(player1, player2, players, Rating)
+        p1 = players[player1]
+        p2 = players[player2]
+        if result1 == "Win" or result2 == "Lose":
+            p1, p2 = g.rate_1vs1(p1, p2)
+            players[player1] = p1
+            players[player2] = p2
+        elif result1 == "Lose" or result2 == "Win":
+            p2, p1 = g.rate_1vs1(p2, p1)
+            players[player1] = p1
+            players[player2] = p2
+        elif result1 == "Draw" or result2 == "Draw":
+            p1, p2 = g.rate_1vs1(p1, p2, drawn=True)
+            players[player1] = p1
+            players[player2] = p2
+        else:
+            continue
+        if player1 in fighters:
+            write_to_csv(player1, p1.mu, rating)
+        if player2 in fighters:
+            write_to_csv(player2, p2.mu, rating)
