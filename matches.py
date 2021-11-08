@@ -1,5 +1,6 @@
 import csv
 import operator
+import os
 
 from algorithms.dwz.dwz_facade import dwz_facade
 from algorithms.ecf.ecf_facade import ecf_facade
@@ -21,6 +22,10 @@ def compile_matches(csv_file):
 
 
 def init(fighters, fights):
+    # Create data folder
+    if not os.path.exists("data"):
+        os.makedirs("data")
+        # initialize all algorithms
     glicko_2_facade(fighters, fights)
     glicko_1_facade(fighters, fights)
     ecf_facade(fighters, fights)
