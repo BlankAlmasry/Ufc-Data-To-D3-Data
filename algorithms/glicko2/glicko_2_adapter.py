@@ -12,7 +12,9 @@ class Glicko2Adapter(BaseCompetitor):
         return self._rating.mu
 
     def expected_score(self, competitor):
-        pass
+        g = Glicko2()
+        quality = g.quality_1vs1(self._rating, competitor._rating)
+        return quality
 
     def beat(self, competitor):
         g = Glicko2()
@@ -33,4 +35,8 @@ class Glicko2Adapter(BaseCompetitor):
         competitor._rating = p2
 
     def export_state(self):
-        pass
+        return {
+            "initial_rating": self._rating.mu,
+            "initial_rd": self._rating.phi,
+            "initial_vol": self._rating.sigma
+        }
