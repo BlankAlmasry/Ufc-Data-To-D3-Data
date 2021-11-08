@@ -1,13 +1,16 @@
+import typing
+
 from elote import GlickoCompetitor
+from elote.competitors.base import BaseCompetitor
 
 import matches
 
 
-def glicko_1(fighters, fights, rating):
+def rating_algorithm(fighters, fights, rating, algorithm: typing.Type[BaseCompetitor]):
     players = {}
     for match in fights:
         player1, player2, result1, result2, *meta = match
-        matches.assign_players_to_dict(player1, player2, players, GlickoCompetitor)
+        matches.assign_players_to_dict(player1, player2, players, algorithm())
         p1 = players[player1]
         p2 = players[player2]
         if result1 == "Win" or result2 == "Lose":
