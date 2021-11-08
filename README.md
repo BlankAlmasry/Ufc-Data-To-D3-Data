@@ -4,3 +4,4 @@ Just a script to convert the data from the Ufc-Scrapper repository to a format t
 Rating-Algorithms-Visualizer.
 
 Kinda special, because it's a script. wasn't designed to be reused
+
