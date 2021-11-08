@@ -3,8 +3,8 @@ import os
 
 from elote import GlickoCompetitor
 
-import matches
 from algorithms.rating_algorithm import rating_algorithm
+from helper import generate_d3_format
 
 
 def glicko_1_facade(fighters, fights):
@@ -13,5 +13,5 @@ def glicko_1_facade(fighters, fights):
         rating.writerow(["fighter", "value"])
         rating_algorithm(fighters, fights, rating, GlickoCompetitor)
     with open('ratings_glicko_1.csv', 'r', encoding='UTF8', newline='') as ratings:
-        matches.generate_d3_format(ratings, fighters, 1500, "glicko1")
+        generate_d3_format(ratings, fighters, 1500, "glicko1")
     os.remove("ratings_glicko_1.csv")

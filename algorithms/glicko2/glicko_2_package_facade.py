@@ -1,9 +1,9 @@
 import csv
 import os
 
-import matches
 from algorithms.glicko2.glicko_2_adapter import Glicko2Adapter
 from algorithms.rating_algorithm import rating_algorithm
+from helper import generate_d3_format
 
 
 def glicko_2_facade(fighters, fights):
@@ -12,6 +12,5 @@ def glicko_2_facade(fighters, fights):
         rating.writerow(["fighter", "value"])
         rating_algorithm(fighters, fights, rating, Glicko2Adapter)
     with open('ratings_glicko_2.csv', 'r', encoding='UTF8', newline='') as ratings:
-        matches.generate_d3_format(ratings, fighters, 1500, "glicko2")
+        generate_d3_format(ratings, fighters, 1500, "glicko2")
     os.remove("ratings_glicko_2.csv")
-
