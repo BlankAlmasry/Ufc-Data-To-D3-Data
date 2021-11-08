@@ -1,5 +1,5 @@
 import matches
-from algorithms.glicko2.glicko2 import Glicko2, Rating
+from algorithms.glicko2_package.glicko2 import Rating, Glicko2
 
 
 def glicko_2_adapter(fighters, rating, sorted_fights):

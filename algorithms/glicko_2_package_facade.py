@@ -1,7 +1,6 @@
 import csv
 import os
 
-from algorithms.glicko2.glicko2 import Glicko2, Rating
 import matches
 from algorithms.glicko_2_adapter import glicko_2_adapter
 
