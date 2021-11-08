@@ -1,3 +1,7 @@
 from matches import compile_matches
-compile_matches("fights.csv")
+import sys
 
+
+if __name__ == '__main__':
+    compile_matches(sys.argv[1])
+    print("Done")
