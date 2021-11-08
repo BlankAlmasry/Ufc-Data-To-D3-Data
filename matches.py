@@ -1,5 +1,4 @@
 import csv
-import json
 import operator
 
 from algorithms.dwz.dwz_facade import dwz_facade
@@ -12,12 +11,13 @@ from helper import top_15_fighters
 
 
 def compile_matches(csv_file):
-    fighters = top_15_fighters()
+    top_fighters = top_15_fighters()
     with open(csv_file, 'r', encoding='UTF8', newline='') as fights:
         fights = csv.reader(fights)
         # sort by date
         sorted_fights = sorted(fights, key=operator.itemgetter(4), reverse=False)
-        init(fighters, sorted_fights)
+        # compute matches with several algorithms
+        init(top_fighters, sorted_fights)
 
 
 def init(fighters, fights):
