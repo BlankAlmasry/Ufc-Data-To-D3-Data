@@ -10,7 +10,7 @@ def rating_algorithm(fighters, fights, rating, algorithm: typing.Type[BaseCompet
     players = {}
     for match in fights:
         player1, player2, result1, result2, *meta = match
-        matches.assign_players_to_dict(player1, player2, players, algorithm())
+        matches.assign_players_to_dict(player1, player2, players, algorithm)
         p1 = players[player1]
         p2 = players[player2]
         if result1 == "Win" or result2 == "Lose":
