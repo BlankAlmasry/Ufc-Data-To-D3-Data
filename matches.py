@@ -71,30 +71,34 @@ def init(fighters, fights):
 
 
 def glicko_1_facade(fighters, fights):
-    players = {}
     with open('ratings_glicko_1.csv', 'w+', encoding='UTF8', newline='') as ratings:
         rating = csv.writer(ratings)
         rating.writerow(["fighter", "value"])
-        for match in fights:
-            player1, player2, result1, result2, *meta = match
-            assign_players_to_dict(player1, player2, players, GlickoCompetitor)
-            p1 = players[player1]
-            p2 = players[player2]
-            if result1 == "Win" or result2 == "Lose":
-                p1.beat(p2)
-            elif result1 == "Lose" or result2 == "Win":
-                p2.beat(p1)
-            elif result1 == "Draw" or result2 == "Draw":
-                p1.tied(p2)
-            else:
-                continue
-            if player1 in fighters:
-                write_to_csv(player1, p1.rating, rating)
-            if player2 in fighters:
-                write_to_csv(player2, p2.rating, rating)
+        glicko_1(fighters, fights, rating)
     with open('ratings_glicko_1.csv', 'r', encoding='UTF8', newline='') as ratings:
         generate_d3_format(ratings, fighters, 1500, "glicko1")
     os.remove("ratings_glicko_1.csv")
+
+
+def glicko_1(fighters, fights, rating):
+    players = {}
+    for match in fights:
+        player1, player2, result1, result2, *meta = match
+        assign_players_to_dict(player1, player2, players, GlickoCompetitor)
+        p1 = players[player1]
+        p2 = players[player2]
+        if result1 == "Win" or result2 == "Lose":
+            p1.beat(p2)
+        elif result1 == "Lose" or result2 == "Win":
+            p2.beat(p1)
+        elif result1 == "Draw" or result2 == "Draw":
+            p1.tied(p2)
+        else:
+            continue
+        if player1 in fighters:
+            write_to_csv(player1, p1.rating, rating)
+        if player2 in fighters:
+            write_to_csv(player2, p2.rating, rating)
 
 # TODO
 # ECF(fighters, players, rating, sorted_fights)
