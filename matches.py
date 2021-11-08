@@ -9,6 +9,7 @@ from elote.competitors.base import BaseCompetitor
 
 from algorithms.dwz.dwz_facade import dwz_facade
 from algorithms.ecf.ecf_facade import ecf_facade
+from algorithms.elo.elo_facade import elo_facade
 from algorithms.glicko1.glicko_1_facade import glicko_1_facade
 from algorithms.glicko2.glicko2 import Rating, Glicko2
 from algorithms.glicko2.glicko2facade import glicko_2_facade
@@ -74,6 +75,7 @@ def init(fighters, fights):
     glicko_1_facade(fighters, fights)
     ecf_facade(fighters, fights)
     dwz_facade(fighters, fights)
+    elo_facade(fighters, fights)
 
 
 
