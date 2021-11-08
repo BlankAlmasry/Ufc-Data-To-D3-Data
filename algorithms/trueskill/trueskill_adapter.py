@@ -1,6 +1,5 @@
 from elote.competitors.base import BaseCompetitor
-from trueskill import rate_1vs1
-from algorithms.glicko2_package.glicko2 import Rating,
+from trueskill import rate_1vs1, Rating
 
 
 class TrueskillAdapter(BaseCompetitor):
