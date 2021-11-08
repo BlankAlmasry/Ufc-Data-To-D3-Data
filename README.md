@@ -7,13 +7,16 @@ Kinda special, because it's a script. wasn't designed to be reused
 
 ## Usage
 
-Must have csv file in format of <code>name1, name2, result1, result2, data(yyyy-mm-dd))</code>
+Must have csv file in format of
+`name1, name2, result1, result2, data(yyyy-mm-dd))`
 
-I left fights.csv file which is a real example based on all UFC fights
+`py -m pip install -r requirements.txt`
 
-<code> py -m main.py path-to-csv-file </code>
+`py main.py path-to-csv-file`
 
 data will be generated in data folder
+
+I left fights.csv file which is a real example based on all UFC fights
 
 ### Supported Algorithms:
 
