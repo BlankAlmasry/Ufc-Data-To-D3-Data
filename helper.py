@@ -31,7 +31,7 @@ def generate_d3_format(ratings_file, fighters, initialized_rating, class_name):
         if len(d[f]) < 24:
             d[f].extend([d[f][len(d[f]) - 1]] * (25 - len(d[f])))
     j = open("data/" + class_name + '_data.js', 'w')
-    j.write("const dataOri = [")
+    j.write("let dataOri = [")
     # headers
     json.dump(["fights", *[n for n in range(0, 25)]], j)
     j.write(',\n')
