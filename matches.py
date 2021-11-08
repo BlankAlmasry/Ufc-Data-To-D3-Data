@@ -6,6 +6,7 @@ import typing
 from elote.competitors.base import BaseCompetitor
 
 from algorithms.glicko2.glicko2 import Rating, Glicko2
+from algorithms.glicko2.glicko2facade import glicko_2_facade
 
 
 def top_15_fighters():
@@ -65,14 +66,6 @@ def init(fighters, players, fights):
     glicko_2_facade(fighters, players, fights)
 
 
-def glicko_2_facade(fighters, players, fights):
-    with open('ratings_glicko_2.csv', 'w+', encoding='UTF8', newline='') as ratings:
-        rating = csv.writer(ratings)
-        rating.writerow(["fighter", "value"])
-        glicko_2(fighters, players, rating, fights)
-    with open('ratings_glicko_2.csv', 'r', encoding='UTF8', newline='') as ratings:
-        generate_d3_format(ratings, fighters)
-    os.remove("ratings_glicko_2.csv")
 
 
 # TODO
@@ -83,28 +76,3 @@ def glicko_2_facade(fighters, players, fights):
 # TrueSkill(fighters, players, rating, sorted_fights)
 
 
-def glicko_2(fighters, players, rating, sorted_fights):
-    g = Glicko2()
-    for match in sorted_fights:
-        player1, player2, result1, result2, *meta = match
-        assign_players_to_dict(player1, player2, players, Rating)
-        p1 = players[player1]
-        p2 = players[player2]
-        if result1 == "Win" or result2 == "Lose":
-            p1, p2 = g.rate_1vs1(p1, p2)
-            players[player1] = p1
-            players[player2] = p2
-        elif result1 == "Lose" or result2 == "Win":
-            p2, p1 = g.rate_1vs1(p2, p1)
-            players[player1] = p1
-            players[player2] = p2
-        elif result1 == "Draw" or result2 == "Draw":
-            p1, p2 = g.rate_1vs1(p1, p2, drawn=True)
-            players[player1] = p1
-            players[player2] = p2
-        else:
-            continue
-        if player1 in fighters:
-            write_to_csv(player1, p1.mu, rating)
-        if player2 in fighters:
-            write_to_csv(player2, p2.mu, rating)
