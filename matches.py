@@ -1,17 +1,12 @@
 import csv
 import json
 import operator
-import os
-import typing
-
-from elote import GlickoCompetitor
-from elote.competitors.base import BaseCompetitor
 
 from algorithms.dwz.dwz_facade import dwz_facade
 from algorithms.ecf.ecf_facade import ecf_facade
 from algorithms.elo.elo_facade import elo_facade
 from algorithms.glicko1.glicko_1_facade import glicko_1_facade
-from algorithms.glicko_2_package_facade import glicko_2_facade
+from algorithms.glicko2.glicko_2_package_facade import glicko_2_facade
 
 
 def top_15_fighters():
@@ -68,17 +63,12 @@ def compile_matches(csv_file):
         init(fighters, sorted_fights)
 
 
-
 def init(fighters, fights):
     glicko_2_facade(fighters, fights)
     glicko_1_facade(fighters, fights)
     ecf_facade(fighters, fights)
     dwz_facade(fighters, fights)
     elo_facade(fighters, fights)
-
-
-
-
 
 # TODO
 # ELO(fighters, players, rating, sorted_fights)
