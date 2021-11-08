@@ -1,6 +1,7 @@
 import csv
 import json
 import operator
+import os
 import typing
 from elote.competitors.base import BaseCompetitor
 
@@ -57,21 +58,29 @@ def compile_matches(csv_file):
         fights = csv.reader(fights)
         # sort by date
         sorted_fights = sorted(fights, key=operator.itemgetter(4), reverse=False)
-        glicko_2_facade(fighters, players, sorted_fights)
+        init(fighters, players, sorted_fights)
 
 
-def glicko_2_facade(fighters, players, sorted_fights):
-    with open('ratings.csv', 'w', encoding='UTF8', newline='') as ratings:
+def init(fighters, players, fights):
+    glicko_2_facade(fighters, players, fights)
+
+
+def glicko_2_facade(fighters, players, fights):
+    with open('ratings_glicko_2.csv', 'w+', encoding='UTF8', newline='') as ratings:
         rating = csv.writer(ratings)
         rating.writerow(["fighter", "value"])
-        glicko_2(fighters, players, rating, sorted_fights)
-    rating_file = open('ratings.csv', 'r', encoding='UTF8', newline='')
-    generate_d3_format(rating_file, fighters)
-        # glicko_1(fighters, players, rating, sorted_fights)
-        # ECF(fighters, players, rating, sorted_fights)
-        # ELO(fighters, players, rating, sorted_fights)
-        # DWZ(fighters, players, rating, sorted_fights)
-        # TrueSkill(fighters, players, rating, sorted_fights)
+        glicko_2(fighters, players, rating, fights)
+    with open('ratings_glicko_2.csv', 'r', encoding='UTF8', newline='') as ratings:
+        generate_d3_format(ratings, fighters)
+    os.remove("ratings_glicko_2.csv")
+
+
+# TODO
+# glicko_1(fighters, players, rating, sorted_fights)
+# ECF(fighters, players, rating, sorted_fights)
+# ELO(fighters, players, rating, sorted_fights)
+# DWZ(fighters, players, rating, sorted_fights)
+# TrueSkill(fighters, players, rating, sorted_fights)
 
 
 def glicko_2(fighters, players, rating, sorted_fights):
