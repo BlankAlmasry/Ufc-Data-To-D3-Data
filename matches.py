@@ -7,6 +7,7 @@ from algorithms.ecf.ecf_facade import ecf_facade
 from algorithms.elo.elo_facade import elo_facade
 from algorithms.glicko1.glicko_1_facade import glicko_1_facade
 from algorithms.glicko2.glicko_2_package_facade import glicko_2_facade
+from algorithms.openskills.BradleyTerryModel_facade import BradleyTerryModel_facade
 from algorithms.trueskill.trueskill_facade import trueskill_facade
 from helper import top_15_fighters
 from algorithms.fire.fire_facade import fire_facade
@@ -33,3 +34,4 @@ def init(fighters, fights):
     elo_facade(fighters, fights)
     trueskill_facade(fighters, fights)
     fire_facade(fighters, fights)
+    BradleyTerryModel_facade(fighters, fights)

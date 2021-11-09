@@ -15,19 +15,22 @@ class BradleyTerryModelAdapter(BaseCompetitor):
         pass
 
     def beat(self, competitor):
-        p1, p2 = rate([[self._rating], [competitor._rating]], model=BradleyTerryFull)
-        self._rating = Rating(*p1)
-        competitor._rating = Rating(*p2)
+        p = rate([[self._rating], [competitor._rating]], model=BradleyTerryFull)
+        p1, p2 = p[0], p[1]
+        self._rating = Rating(*p1[0])
+        competitor._rating = Rating(*p2[0])
 
     def lost_to(self, competitor):
-        p1, p2 = rate([[competitor._rating], [self._rating]], model=BradleyTerryFull)
-        self._rating = Rating(*p2)
-        competitor._rating = Rating(*p1)
+        p = rate([[competitor._rating], [self._rating]], model=BradleyTerryFull)
+        p1, p2 = p[1], p[0]
+        self._rating = Rating(*p1[0])
+        competitor._rating = Rating(*p2[0])
 
     def tied(self, competitor):
-        p1, p2 = rate([[competitor._rating], [self._rating]], model=BradleyTerryFull, score=[1, 1])
-        self._rating = Rating(*p2)
-        competitor._rating = Rating(*p1)
+        p = rate([[self._rating], [competitor._rating]], model=BradleyTerryFull, score=[1, 1])
+        p1, p2 = p[0], p[1]
+        self._rating = Rating(*p1[0])
+        competitor._rating = Rating(*p2[0])
 
     def export_state(self):
         pass
