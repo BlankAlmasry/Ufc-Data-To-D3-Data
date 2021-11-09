@@ -1,2 +1,5 @@
 elote==0.1.0
 Trueskill==0.4.5
+openskill~=0.1.0a2
+setuptools~=58.2.0
+glicko2~=2.0.0
