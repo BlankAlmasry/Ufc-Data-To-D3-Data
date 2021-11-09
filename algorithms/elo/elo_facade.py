@@ -4,7 +4,7 @@ import os
 from elote import EloCompetitor
 
 from algorithms.rating_algorithm import rating_algorithm
-from helper import generate_d3_format
+from helpers import generate_d3_format
 
 
 def elo_facade(fighters, fights):

@@ -3,7 +3,7 @@ import os
 
 from algorithms.fire.fire import Fire
 from algorithms.rating_algorithm import rating_algorithm
-from helper import generate_d3_format
+from helpers import generate_d3_format
 
 
 def fire_facade(fighters, fights):

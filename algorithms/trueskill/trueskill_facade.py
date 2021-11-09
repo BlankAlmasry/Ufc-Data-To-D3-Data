@@ -3,7 +3,7 @@ import os
 
 from algorithms.rating_algorithm import rating_algorithm
 from algorithms.trueskill.trueskill_adapter import TrueskillAdapter
-from helper import generate_d3_format
+from helpers import generate_d3_format
 
 
 def trueskill_facade(fighters, fights):

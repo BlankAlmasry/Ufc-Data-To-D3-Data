@@ -2,7 +2,7 @@ import typing
 
 from elote.competitors.base import BaseCompetitor
 
-from helper import write_to_csv, assign_players_to_dict
+from helpers import write_to_csv, assign_players_to_dict
 
 
 def rating_algorithm(fighters, fights, rating, algorithm: typing.Type[BaseCompetitor]):

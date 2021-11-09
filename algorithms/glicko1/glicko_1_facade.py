@@ -4,7 +4,7 @@ import os
 from elote import GlickoCompetitor
 
 from algorithms.rating_algorithm import rating_algorithm
-from helper import generate_d3_format
+from helpers import generate_d3_format
 
 
 def glicko_1_facade(fighters, fights):

@@ -4,7 +4,7 @@ import os
 from elote import ECFCompetitor
 
 from algorithms.rating_algorithm import rating_algorithm
-from helper import generate_d3_format
+from helpers import generate_d3_format
 
 
 def ecf_facade(fighters, fights):

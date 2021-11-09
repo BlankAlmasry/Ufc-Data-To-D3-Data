@@ -3,7 +3,7 @@ import os
 
 from algorithms.glicko2.glicko_2_adapter import Glicko2Adapter
 from algorithms.rating_algorithm import rating_algorithm
-from helper import generate_d3_format
+from helpers import generate_d3_format
 
 
 def glicko_2_facade(fighters, fights):

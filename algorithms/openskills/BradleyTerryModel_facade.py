@@ -3,7 +3,7 @@ import os
 
 from algorithms.openskills.BradleyTerryModel_Adapter import BradleyTerryModelAdapter
 from algorithms.rating_algorithm import rating_algorithm
-from helper import generate_d3_format
+from helpers import generate_d3_format
 
 
 def BradleyTerryModel_facade(fighters, fights):
