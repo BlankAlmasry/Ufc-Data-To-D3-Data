@@ -8,7 +8,7 @@ Kinda special, because it's a script. wasn't designed to be reused
 ## Usage
 
 Must have csv file in format of
-`name1, name2, result1, result2, data(yyyy-mm-dd))`
+`name1, name2, result1, result2, date(yyyy-mm-dd))`
 
 `py -m pip install -r requirements.txt`
 
