@@ -3,7 +3,7 @@ from elote.competitors.base import BaseCompetitor
 
 class Fire(BaseCompetitor):
     def __init__(self, name):
-        self.fire_count = 0
+        self.fire_count = 10
 
     @property
     def rating(self):
