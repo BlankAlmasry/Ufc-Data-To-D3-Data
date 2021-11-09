@@ -6,7 +6,7 @@ from algorithms.rating_algorithm import rating_algorithm
 from helper import generate_d3_format
 
 
-def glicko_2_facade(fighters, fights):
+def fire_facade(fighters, fights):
     with open('ratings_fire.csv', 'w+', encoding='UTF8', newline='') as ratings:
         rating = csv.writer(ratings)
         rating.writerow(["fighter", "value"])

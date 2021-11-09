@@ -9,7 +9,7 @@ from algorithms.glicko1.glicko_1_facade import glicko_1_facade
 from algorithms.glicko2.glicko_2_package_facade import glicko_2_facade
 from algorithms.trueskill.trueskill_facade import trueskill_facade
 from helper import top_15_fighters
-
+from algorithms.fire.fire_facade import fire_facade
 
 def compile_matches(csv_file):
     top_fighters = top_15_fighters()
@@ -32,3 +32,4 @@ def init(fighters, fights):
     dwz_facade(fighters, fights)
     elo_facade(fighters, fights)
     trueskill_facade(fighters, fights)
+    fire_facade(fighters, fights)

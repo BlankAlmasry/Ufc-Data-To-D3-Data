@@ -2,7 +2,7 @@ from elote.competitors.base import BaseCompetitor
 
 
 class Fire(BaseCompetitor):
-    def __init__(self, name):
+    def __init__(self):
         self.fire_count = 10
 
     @property
@@ -14,11 +14,11 @@ class Fire(BaseCompetitor):
 
     def beat(self, competitor):
         self.fire_count += competitor.fire_count
-        competitor.fire_count = 0
+        competitor.fire_count = competitor.fire_count/2
 
     def lost_to(self, competitor):
         competitor.fire_count += self.fire_count
-        self.fire_count = 0
+        self.fire_count = self.fire_count/2
 
     def tied(self, competitor):
         total = self.fire_count - competitor.fire_count
