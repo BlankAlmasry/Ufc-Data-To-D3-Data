@@ -1,7 +1,16 @@
 from matches import compile_matches
-import sys
+import click
+
+
+@click.command()
+@click.argument("file")
+def main(file):
+    """
+    Compile matches from a csv file.
+    """
+    compile_matches(file)
+    click.echo("Done")
 
 
 if __name__ == '__main__':
-    compile_matches(sys.argv[1])
-    print("Done")
+    main()
