@@ -17,8 +17,8 @@ class TrueskillAdapter(BaseCompetitor):
 
     def lost_to(self, competitor):
         p1, p2 = rate_1vs1(competitor._rating, self._rating)
-        self._rating = p1
-        competitor._rating = p2
+        competitor._rating = p1
+        self._rating = p2
 
     def tied(self, competitor):
         p1, p2 = rate_1vs1(self._rating, competitor._rating, drawn=True)
